@@ -7,7 +7,7 @@ from nnunet.utilities.file_conversions import convert_2d_image_to_nifti
 if __name__ == '__main__':
     
     base = 'data'
-    task_name = 'Task1_ISIC'
+    task_name = 'Task001_ISIC'
 
     target_base = join('', task_name)
     target_imagesTr = join(target_base, "imagesTr")
