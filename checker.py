@@ -6,10 +6,12 @@ from batchgenerators.utilities.file_and_folder_operations import *
 from nnunet.configuration import default_num_threads
 from nnunet.utilities.file_conversions import convert_2d_image_to_nifti
 
-
+# WSTAW SCIEZKE
 base = 'data'
-task_name = 'Task1_ISIC'
+task_name = 'Task001_ISIC'
 folder = join('', task_name)
+
+FILES_TO_MISS = 4
 
 target_imagesTr = join(folder, "imagesTr")
 target_labelsTr = join(folder, "labelsTr")
@@ -40,8 +42,14 @@ label_suffix = '_segmentation.png'
 # check all cases
 if len(expected_train_identifiers) != len(np.unique(expected_train_identifiers)): raise RuntimeError("found duplicate training cases in dataset.json")
 
+counter = 0
+
 print("Verifying training set")
 for c in expected_train_identifiers:
+    counter += 1
+    if counter < FILES_TO_MISS:
+        continue
+
     print("checking case", c)
     # check if all files are present
     expected_label_file = join(folder, "labelsTr", c + ".nii.gz")
