@@ -40,21 +40,6 @@ if __name__ == '__main__':
         convert_2d_image_to_nifti(input_segmentation_file, output_seg_file, is_seg=True,
                                   transform=lambda x: (x == 255).astype(int))
 
-    labels_dir_ts = join(base, 'ISIC2018_Task1_Validation_GroundTruth')
-    images_dir_ts = join(base, 'ISIC2018_Task1-2_Validation_Input')
-    testing_cases = subfiles(labels_dir_ts, suffix='.png', join=False)
-    for ts in testing_cases:
-        unique_name = ts[:-17]
-        input_segmentation_file = join(labels_dir_ts, ts)
-        input_image_file = join(images_dir_ts, (unique_name + '.jpg'))
-
-        output_image_file = join(target_imagesTs, unique_name)
-        output_seg_file = join(target_labelsTs, unique_name)
-
-        convert_2d_image_to_nifti(input_image_file, output_image_file, is_seg=False)
-        convert_2d_image_to_nifti(input_segmentation_file, output_seg_file, is_seg=True,
-                                  transform=lambda x: (x == 255).astype(int))
-
     generate_dataset_json(join(target_base, 'dataset.json'), target_imagesTr, target_imagesTs, ('Red', 'Green', 'Blue'),
                           labels={0: 'background', 1: 'melanoma'}, dataset_name=task_name, license='hands off!')
 
