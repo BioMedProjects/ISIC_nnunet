@@ -9,7 +9,8 @@ from creator import TaskCreatorNNUnet
 file_dir = 'result.json'
 attributes_dir = 'ISIC2018_Task2_Training_GroundTruth_v3'
 
-TARGET_NUMBER = 1
+TARGET_NUMBER = 519
+# 2594
 
 divider = Divider(TARGET_NUMBER)
 task_creator = TaskCreatorNNUnet(
@@ -30,8 +31,15 @@ attributes_names = ['milia_like_cyst', 'negative_network', 'streaks', 'globules'
 
 attributes_df = get_attributes_df(cropped_names, attributes_files, attributes_names)
 
-cluster_labels, representatives = divider.get_representatives(reduced_data)
+cluster_labels, representatives = divider.get_representatives(reduced_data, cropped_names)
 print(representatives)
+
+representatives_names = [cropped_names[i] for i in representatives]
+
+attributes_df['cluster'] = cluster_labels
+divider.get_ISIC_atributes_summary(attributes_df)
+
+task_creator.create_task("Task080_ISIC", representatives)
 
 representatives_names = [cropped_names[i] for i in representatives]
 

@@ -1,5 +1,8 @@
+import os
+import glob
 import numpy as np
 import pandas as pd
+from PIL import Image
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
 
@@ -37,7 +40,9 @@ def preprocess(data):
     return reduced_data
 
 
-def get_attributes_df(cropped_names, attributes_files, attributes_names):
+def get_attributes_df(cropped_names, attributes_dir, attributes_names):
+    attributes_files = [os.path.basename(x) for x in glob.glob(attributes_dir + '**/*.png')]
+
     attributes_dict = {}
     for n in cropped_names:
         attributes_dict[n] = {}
